@@ -23,4 +23,23 @@ router.post('/create', function(req, res) {
   });
 });
 
+router.delete("/:id", function(req, res){
+
+
+		db.userProfile.destroy({
+				where:{userId: req.session.user.userId},
+				
+		}).then(function(user) {
+				req.session.reset();
+				// console.log("ALREADY DELETED");
+				
+				// redirect the user to the homepage
+				res.redirect("/");
+			// error handling
+			}).catch(function(error){
+					console.log(error);
+					res.redirect("/errorPage")
+				});
+	},
+
 module.exports = router;
